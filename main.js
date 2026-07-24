@@ -69,7 +69,9 @@
       gsap.to(w, { opacity: 1, y: 0, duration: 0.9, delay: 0.15 + i * 0.12, ease: "expo.out" });
     });
     var heroExtras = document.querySelectorAll(".hero .reveal-up");
-    gsap.to(heroExtras, { opacity: 1, y: 0, duration: 0.8, delay: 0.55, stagger: 0.1, ease: "power2.out" });
+    if (heroExtras.length){
+      gsap.to(heroExtras, { opacity: 1, y: 0, duration: 0.8, delay: 0.55, stagger: 0.1, ease: "power2.out" });
+    }
 
     revealEls.forEach(function(el){
       ScrollTrigger.create({
@@ -80,19 +82,23 @@
       });
     });
 
-    // Hero parallax shapes
-    gsap.utils.toArray(".shape").forEach(function(shape, i){
-      var depth = (i + 1) * 10;
-      gsap.to(shape, {
-        yPercent: depth,
-        rotate: i % 2 === 0 ? 12 : -10,
-        ease: "none",
-        scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 0.6 }
+    // Hero parallax shapes (only present on pages with a hero)
+    if (document.getElementById("hero")){
+      gsap.utils.toArray(".shape").forEach(function(shape, i){
+        var depth = (i + 1) * 10;
+        gsap.to(shape, {
+          yPercent: depth,
+          rotate: i % 2 === 0 ? 12 : -10,
+          ease: "none",
+          scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 0.6 }
+        });
       });
-    });
-    gsap.to(".shape-1", { y: -16, duration: 4, ease: "sine.inOut", yoyo: true, repeat: -1 });
-    gsap.to(".shape-3", { y: 12, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.4 });
-    gsap.to(".shape-5", { y: -14, x: 8, duration: 5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.2 });
+      gsap.to(".shape-1", { y: -16, duration: 4, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".shape-3", { y: 12, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.4 });
+      gsap.to(".shape-5", { y: -14, x: 8, duration: 5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.2 });
+      gsap.to(".shape-6", { y: 10, duration: 3.6, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.6 });
+      gsap.to(".shape-7", { y: -12, x: -6, duration: 4.4, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.3 });
+    }
 
     // Process line fill scrub
     var fill = document.getElementById("processFill");
@@ -104,7 +110,7 @@
     }
 
     // Services / pricing / process cards stagger by section
-    [".services-grid", ".pricing-grid"].forEach(function(sel){
+    [".pricing-grid"].forEach(function(sel){
       var container = document.querySelector(sel);
       if (!container) return;
       var cards = container.children;
@@ -119,16 +125,19 @@
       });
     });
 
-    var steps = document.querySelectorAll(".process-step");
-    gsap.set(steps, { opacity: 0, y: 24 });
-    ScrollTrigger.create({
-      trigger: ".process-track",
-      start: "top 85%",
-      once: true,
-      onEnter: function(){
-        gsap.to(steps, { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power2.out" });
-      }
-    });
+    var processTrack = document.querySelector(".process-track");
+    if (processTrack){
+      var steps = document.querySelectorAll(".process-step");
+      gsap.set(steps, { opacity: 0, y: 24 });
+      ScrollTrigger.create({
+        trigger: processTrack,
+        start: "top 85%",
+        once: true,
+        onEnter: function(){
+          gsap.to(steps, { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: "power2.out" });
+        }
+      });
+    }
 
   } else {
     // Fallback covers: no GSAP, OR reduced-motion (still needs content revealed, just not animated)

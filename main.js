@@ -160,10 +160,47 @@
   }
 
   /* -----------------------------------------------------------------
+     Safety net: guarantee content never gets stuck invisible.
+     GSAP's entrance tweens rely on requestAnimationFrame, which browsers
+     pause for hidden/backgrounded tabs (e.g. a page opened in a background
+     tab, or previewed inside an iframe by a host's dashboard). If that
+     happens the tween never advances and content stays at opacity 0
+     forever. Force it visible if it's still stuck after a couple seconds,
+     and re-check whenever the tab actually becomes visible.
+  ----------------------------------------------------------------- */
+  function forceRevealStuck(){
+    document.querySelectorAll(".reveal-up, .reveal-word").forEach(function(el){
+      if (parseFloat(getComputedStyle(el).opacity) < 1){
+        el.classList.add("in");
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      }
+    });
+  }
+  function forceCountersStuck(){
+    document.querySelectorAll(".stat-num").forEach(function(el){
+      if (!el.getAttribute("data-done")){
+        var target = parseFloat(el.getAttribute("data-count"));
+        var prefix = el.getAttribute("data-prefix") || "";
+        var suffix = el.getAttribute("data-suffix") || "";
+        el.textContent = prefix + target + suffix;
+      }
+    });
+  }
+  setTimeout(function(){ forceRevealStuck(); forceCountersStuck(); }, 2000);
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden){
+      if (hasGSAP) ScrollTrigger.refresh();
+      forceRevealStuck();
+    }
+  });
+
+  /* -----------------------------------------------------------------
      Stat counters
   ----------------------------------------------------------------- */
   var counters = document.querySelectorAll(".stat-num");
   function animateCounter(el){
+    el.setAttribute("data-done", "1");
     var target = parseFloat(el.getAttribute("data-count"));
     var prefix = el.getAttribute("data-prefix") || "";
     var suffix = el.getAttribute("data-suffix") || "";

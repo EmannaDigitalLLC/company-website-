@@ -200,18 +200,19 @@
   ----------------------------------------------------------------- */
   var counters = document.querySelectorAll(".stat-num");
   function animateCounter(el){
-    el.setAttribute("data-done", "1");
     var target = parseFloat(el.getAttribute("data-count"));
     var prefix = el.getAttribute("data-prefix") || "";
     var suffix = el.getAttribute("data-suffix") || "";
     if (reduceMotion || !hasGSAP){
       el.textContent = prefix + target + suffix;
+      el.setAttribute("data-done", "1");
       return;
     }
     var obj = { val: 0 };
     gsap.to(obj, {
       val: target, duration: 1.4, ease: "power2.out",
-      onUpdate: function(){ el.textContent = prefix + Math.round(obj.val) + suffix; }
+      onUpdate: function(){ el.textContent = prefix + Math.round(obj.val) + suffix; },
+      onComplete: function(){ el.setAttribute("data-done", "1"); }
     });
   }
   if ("IntersectionObserver" in window){

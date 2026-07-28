@@ -182,6 +182,32 @@ section{ position:relative; padding:var(--space-6) 0; }
 }
 
 /* ===================================================================
+   Floating call button (fixed to viewport, persists across scroll & pages)
+=================================================================== */
+.phone-fab{
+  position:fixed; bottom:28px; right:28px; z-index:120;
+  width:56px; height:56px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--maroon); color:#fdf1e6;
+  box-shadow:0 10px 28px -6px rgba(122,38,32,0.6);
+  transition:transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-med) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+.phone-fab::before{
+  content:''; position:absolute; inset:-6px; border-radius:50%;
+  border:2px solid var(--orange); opacity:0.55;
+  animation:phoneFabPulse 2.6s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes phoneFabPulse{
+  0%{ transform:scale(0.88); opacity:0.55; }
+  70%{ transform:scale(1.35); opacity:0; }
+  100%{ opacity:0; }
+}
+.phone-fab svg{ width:24px; height:24px; position:relative; z-index:1; }
+.phone-fab:hover{ background:var(--maroon-dark); transform:translateY(-3px) scale(1.05); box-shadow:0 14px 32px -6px rgba(122,38,32,0.75); }
+@media (max-width:640px){ .phone-fab{ width:50px; height:50px; bottom:18px; right:18px; } .phone-fab svg{ width:21px; height:21px; } }
+
+/* ===================================================================
    Nav
 =================================================================== */
 .nav{
@@ -622,6 +648,9 @@ section{ position:relative; padding:var(--space-6) 0; }
 .final-cta > .section-inner > p{ color:rgba(251,243,224,0.78); margin:0 auto var(--space-4); font-size:17px; }
 .final-cta .btn-dark{ background:var(--amber); color:var(--maroon-dark); }
 .final-cta .btn-dark:hover{ background:var(--amber-light); }
+.final-cta .btn-outline{ border-color:rgba(251,243,224,0.4); color:#fdf1e6; }
+.final-cta .btn-outline:hover{ border-color:#fdf1e6; background:rgba(251,243,224,0.08); }
+.final-cta-actions{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 
 /* ===================================================================
    Footer
@@ -639,6 +668,7 @@ section{ position:relative; padding:var(--space-6) 0; }
 }
 .footer-links{ display:flex; flex-direction:column; gap:9px; font-size:14px; color:var(--ink-soft); }
 .footer-links a:hover{ color:var(--maroon); }
+.footer-contact-links{ display:flex; flex-direction:column; gap:10px; }
 .footer-contact-link{ font-size:14px; color:var(--ink-soft); transition:color var(--dur-fast); }
 .footer-contact-link:hover{ color:var(--maroon); }
 .footer-bottom{

@@ -663,6 +663,43 @@ section{ position:relative; padding:var(--space-6) 0; }
 .final-cta .btn-outline:hover{ border-color:#fdf1e6; background:rgba(251,243,224,0.08); }
 .final-cta-actions{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 
+/* Contact form (inside Final CTA) */
+.contact-form-wrap{
+  position:relative; z-index:1; margin-top:var(--space-5);
+  background:var(--paper); color:var(--ink); text-align:left;
+  border-radius:var(--radius-lg); padding:var(--space-4);
+  box-shadow:0 30px 60px -20px rgba(20,10,6,0.5);
+}
+.contact-form .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.contact-form .form-field{ display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+.contact-form label{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.contact-form label .optional{ text-transform:none; letter-spacing:0; opacity:0.7; }
+.form-consent{ margin:6px 0 0; font-size:11.5px; line-height:1.5; color:var(--ink-soft); opacity:0.8; }
+.contact-form input, .contact-form textarea{
+  width:100%; font-family:var(--font-body); font-size:15px; color:var(--ink);
+  background:var(--cream-soft); border:1px solid var(--border); border-radius:10px;
+  padding:12px 14px; transition:border-color var(--dur-fast), box-shadow var(--dur-fast), background var(--dur-fast);
+}
+.contact-form input::placeholder, .contact-form textarea::placeholder{ color:var(--ink-soft); opacity:0.6; }
+.contact-form input:focus, .contact-form textarea:focus{
+  outline:none; border-color:var(--maroon-tint); background:var(--paper);
+  box-shadow:0 0 0 3px rgba(122,38,32,0.12);
+}
+.contact-form textarea{ resize:vertical; min-height:100px; }
+.contact-submit{ width:100%; justify-content:center; margin-top:4px; }
+.contact-submit[disabled]{ opacity:0.65; pointer-events:none; }
+.contact-form-status{ margin:14px 0 0; font-size:14px; text-align:center; min-height:20px; }
+.contact-form-status.is-success{ color:#2c6e3f; }
+.contact-form-status.is-error{ color:#a83a2c; }
+.botcheck-field{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+@media (max-width:640px){
+  .contact-form .form-row{ grid-template-columns:1fr; }
+  .contact-form-wrap{ padding:var(--space-3); }
+}
+
 /* ===================================================================
    Footer
 =================================================================== */

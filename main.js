@@ -244,4 +244,54 @@
     });
   });
 
+  /* -----------------------------------------------------------------
+     Contact form (Web3Forms)
+  ----------------------------------------------------------------- */
+  var contactForm = document.getElementById("contactForm");
+  if (contactForm){
+    var contactStatus = document.getElementById("contactFormStatus");
+    var contactSubmit = contactForm.querySelector(".contact-submit");
+    var contactSubmitLabel = contactSubmit.querySelector(".btn-label");
+
+    contactForm.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      // Honeypot: if this hidden field got filled in, silently drop it.
+      if (contactForm.botcheck && contactForm.botcheck.checked) return;
+
+      var formData = new FormData(contactForm);
+      var payload = Object.fromEntries(formData);
+
+      contactSubmit.setAttribute("disabled", "true");
+      contactSubmitLabel.textContent = "Sending...";
+      contactStatus.textContent = "";
+      contactStatus.className = "contact-form-status";
+
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(function(response){ return response.json().then(function(data){ return { ok: response.ok, data: data }; }); })
+        .then(function(result){
+          if (result.ok && result.data.success){
+            contactStatus.classList.add("is-success");
+            contactStatus.textContent = "Thanks — your message is in! I'll get back to you within one business day.";
+            contactForm.reset();
+          } else {
+            contactStatus.classList.add("is-error");
+            contactStatus.textContent = (result.data && result.data.message) || "Something went wrong. Please try again, or call/email directly.";
+          }
+        })
+        .catch(function(){
+          contactStatus.classList.add("is-error");
+          contactStatus.textContent = "Network error — please try again, or reach out by phone/email directly.";
+        })
+        .finally(function(){
+          contactSubmit.removeAttribute("disabled");
+          contactSubmitLabel.textContent = "Send Message";
+        });
+    });
+  }
+
 })();

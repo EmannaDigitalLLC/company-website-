@@ -520,7 +520,10 @@
             <div class="form-field">
               <label for="cf-phone">Phone <span class="optional">(optional)</span></label>
               <input type="tel" id="cf-phone" name="phone" placeholder="(916) 555-0123" autocomplete="tel">
-              <p class="form-consent">By providing your phone number, you agree to receive automated SMS alerts from Emanna Digital regarding work orders and leads submitted on your website. Msg &amp; data rates may apply. Reply STOP to cancel at any time.</p>
+              <label class="form-consent-check">
+                <input type="checkbox" id="cf-sms-consent" name="sms_consent">
+                <span>By checking this box, you agree to receive automated SMS alerts from Emanna Digital regarding work orders and leads submitted on your website. Msg &amp; data rates may apply. Reply STOP to cancel at any time.</span>
+              </label>
             </div>
             <div class="form-field">
               <label for="cf-business">Business Name <span class="optional">(optional)</span></label>

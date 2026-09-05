@@ -8,6 +8,39 @@
   if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
 
   /* -----------------------------------------------------------------
+     Hero fluid glow (desktop only, respects reduced motion)
+     Cursor-reactive WebGL dye simulation, tuned to the brand's
+     maroon/orange/amber embers instead of the library's default rainbow.
+  ----------------------------------------------------------------- */
+  var fluidCanvas = document.getElementById("heroFluid");
+  if (fluidCanvas && typeof WebGLFluid !== "undefined" && !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches){
+    try {
+      WebGLFluid(fluidCanvas, {
+        TRIGGER: "hover",
+        IMMEDIATE: true,
+        COLORFUL: false,
+        SPLAT_COLOR: { r: 1.5, g: 0.55, b: 0.12 },
+        SPLAT_COUNT: 6,
+        SPLAT_RADIUS: 0.22,
+        SPLAT_FORCE: 5000,
+        DENSITY_DISSIPATION: 2.2,
+        VELOCITY_DISSIPATION: 1.4,
+        CURL: 20,
+        SIM_RESOLUTION: 128,
+        DYE_RESOLUTION: 768,
+        TRANSPARENT: true,
+        BLOOM: true,
+        BLOOM_INTENSITY: 0.7,
+        SUNRAYS: false
+      });
+    } catch (err){
+      fluidCanvas.style.display = "none";
+    }
+  } else if (fluidCanvas){
+    fluidCanvas.style.display = "none";
+  }
+
+  /* -----------------------------------------------------------------
      Sticky nav: shrink + backdrop after scroll
   ----------------------------------------------------------------- */
   var nav = document.getElementById("siteNav");

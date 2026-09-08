@@ -679,7 +679,7 @@ section{ position:relative; padding:var(--space-6) 0; }
 }
 .contact-form label .optional{ text-transform:none; letter-spacing:0; opacity:0.7; }
 .form-consent-check{
-  display:flex; align-items:flex-start; gap:10px; margin-top:8px; cursor:pointer;
+  display:flex; align-items:flex-start; gap:10px; margin:2px 0 16px; cursor:pointer;
 }
 .form-consent-check input[type="checkbox"]{
   appearance:none; -webkit-appearance:none; margin:0;

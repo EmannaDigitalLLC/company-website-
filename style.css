@@ -732,8 +732,36 @@ section{ position:relative; padding:var(--space-6) 0; }
   padding-top:var(--space-3); border-top:1px solid var(--border);
 }
 .footer-copy{ font-size:12.5px; color:var(--ink-soft); opacity:0.8; }
+.footer-legal{ display:flex; gap:18px; font-size:12.5px; }
+.footer-legal a{ color:var(--ink-soft); opacity:0.8; transition:color var(--dur-fast), opacity var(--dur-fast); }
+.footer-legal a:hover{ color:var(--maroon); opacity:1; }
 .back-to-top{ font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--orange-deep); }
 .back-to-top:hover{ color:var(--maroon); }
+
+/* ===================================================================
+   Legal pages (Privacy / Terms)
+=================================================================== */
+.legal-inner{ max-width:760px; }
+.legal-meta{
+  font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.04em; text-transform:uppercase;
+  color:var(--ink-soft); margin:var(--space-2) 0 var(--space-4);
+  padding-bottom:var(--space-3); border-bottom:1px solid var(--border);
+}
+.legal-body h3{
+  font-size:22px; font-weight:600; margin:var(--space-4) 0 var(--space-2);
+}
+.legal-body h3:first-child{ margin-top:0; }
+.legal-body p{ margin-bottom:var(--space-2); color:var(--ink-soft); line-height:1.75; }
+.legal-body ul{ margin:0 0 var(--space-2); display:flex; flex-direction:column; gap:10px; }
+.legal-body li{ position:relative; padding-left:22px; color:var(--ink-soft); line-height:1.7; }
+.legal-body li::before{
+  content:''; position:absolute; left:2px; top:10px; width:6px; height:6px; border-radius:50%;
+  background:var(--orange-deep);
+}
+.legal-body strong{ color:var(--ink); font-weight:600; }
+.legal-body a{ color:var(--maroon); text-decoration:underline; text-underline-offset:2px; }
+.legal-body a:hover{ color:var(--orange-deep); }
+.legal-crosslink{ margin-top:var(--space-3); padding-top:var(--space-3); border-top:1px solid var(--border); font-size:14.5px; }
 @media (max-width:640px){
   .footer-inner{ grid-template-columns:1fr; gap:var(--space-3); }
   .footer-brand{ max-width:none; }

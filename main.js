@@ -63,17 +63,19 @@
   ----------------------------------------------------------------- */
   var navToggle = document.getElementById("navToggle");
   var navMobile = document.getElementById("navMobile");
-  navToggle.addEventListener("click", function(){
-    var open = navMobile.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    navToggle.classList.toggle("open", open);
-  });
-  navMobile.querySelectorAll("a").forEach(function(a){
-    a.addEventListener("click", function(){
-      navMobile.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
+  if (navToggle && navMobile){
+    navToggle.addEventListener("click", function(){
+      var open = navMobile.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.classList.toggle("open", open);
     });
-  });
+    navMobile.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", function(){
+        navMobile.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 
   /* -----------------------------------------------------------------
      Cursor glow (desktop only, respects reduced motion)
@@ -285,6 +287,7 @@
     var contactStatus = document.getElementById("contactFormStatus");
     var contactSubmit = contactForm.querySelector(".contact-submit");
     var contactSubmitLabel = contactSubmit.querySelector(".btn-label");
+    var contactSubmitDefault = contactSubmitLabel.textContent;
 
     contactForm.addEventListener("submit", function(e){
       e.preventDefault();
@@ -311,6 +314,7 @@
             contactStatus.classList.add("is-success");
             contactStatus.textContent = "Thanks — your message is in! I'll get back to you within one business day.";
             contactForm.reset();
+            contactForm.dispatchEvent(new Event("contact:success"));
           } else {
             contactStatus.classList.add("is-error");
             contactStatus.textContent = (result.data && result.data.message) || "Something went wrong. Please try again, or call/email directly.";
@@ -322,7 +326,7 @@
         })
         .finally(function(){
           contactSubmit.removeAttribute("disabled");
-          contactSubmitLabel.textContent = "Send Message";
+          contactSubmitLabel.textContent = contactSubmitDefault;
         });
     });
   }

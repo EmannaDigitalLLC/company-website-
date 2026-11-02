@@ -2,6 +2,46 @@
   "use strict";
 
   /* -----------------------------------------------------------------
+     Weekly offer countdown. Counts down to Sunday 11:59 PM Pacific time,
+     then rolls straight into the next week.
+  ----------------------------------------------------------------- */
+  function msUntilWeeklyDeadline(){
+    var now = new Date();
+    var pt = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    var end = new Date(pt.getTime());
+    end.setDate(pt.getDate() + ((7 - pt.getDay()) % 7));
+    end.setHours(23, 59, 59, 999);
+    if (end.getTime() <= pt.getTime()) end.setDate(end.getDate() + 7);
+    return end.getTime() - pt.getTime();
+  }
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  var countdowns = document.querySelectorAll("[data-lp-countdown]");
+  function tick(){
+    var ms = msUntilWeeklyDeadline();
+    var d = Math.floor(ms / 86400000);
+    var h = Math.floor(ms % 86400000 / 3600000);
+    var m = Math.floor(ms % 3600000 / 60000);
+    var s = Math.floor(ms % 60000 / 1000);
+    countdowns.forEach(function(box){
+      box.querySelector('[data-cd="d"]').textContent = pad(d);
+      box.querySelector('[data-cd="h"]').textContent = pad(h);
+      box.querySelector('[data-cd="m"]').textContent = pad(m);
+      box.querySelector('[data-cd="s"]').textContent = pad(s);
+    });
+  }
+  if (countdowns.length){ tick(); setInterval(tick, 1000); }
+
+  /* Dismissible sale bar (stays dismissed for the rest of the visit). */
+  var saleClose = document.getElementById("saleBarClose");
+  try { if (sessionStorage.getItem("lpSaleBarOff") === "1") document.body.classList.add("lp-bar-off"); } catch (e) {}
+  if (saleClose){
+    saleClose.addEventListener("click", function(){
+      document.body.classList.add("lp-bar-off");
+      try { sessionStorage.setItem("lpSaleBarOff", "1"); } catch (e) {}
+    });
+  }
+
+  /* -----------------------------------------------------------------
      Sample-site marquee: repeat each row's tiles until the group is wider
      than the screen, then duplicate the group so the -50% loop is seamless.
   ----------------------------------------------------------------- */

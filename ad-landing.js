@@ -103,6 +103,19 @@
     return true;
   }
 
+  // Business type: tapping a popular choice moves on; "Other" reveals a text box.
+  var otherWrap = form.querySelector(".lp-other");
+  var otherInput = document.getElementById("cf-biz-other");
+  form.querySelectorAll('input[name="business_type"]').forEach(function(radio){
+    radio.addEventListener("change", function(){
+      var isOther = radio.value === "Other";
+      otherWrap.hidden = !isOther;
+      otherInput.required = isOther;
+      if (isOther){ otherInput.focus({ preventScroll: true }); }
+      else { otherInput.value = ""; setTimeout(function(){ nextBtn.click(); }, 220); }
+    });
+  });
+
   nextBtn.addEventListener("click", function(){
     if (currentValid() && current < steps.length - 1) show(current + 1, true);
   });

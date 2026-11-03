@@ -127,18 +127,32 @@
               <div class="lp-step" hidden>
                 <label class="lp-q" for="cf-phone">And your phone number?</label>
                 <input type="tel" id="cf-phone" name="phone" required placeholder="(916) 555-0123" autocomplete="tel">
-                <p class="lp-hint">So we can call or text you about your website.</p>
-              </div>
-              <div class="lp-step" hidden>
-                <label class="lp-q" for="cf-business">What's your business called?</label>
-                <input type="text" id="cf-business" name="business" required placeholder="Your Business" autocomplete="organization">
-              </div>
-              <div class="lp-step" hidden>
-                <p class="lp-q">Last one &mdash; ready to claim your 3-day website?</p>
+                <p class="lp-hint">So we can call you about your website.</p>
                 <label class="form-consent-check">
                   <input type="checkbox" id="cf-sms-consent" name="sms_consent">
                   <span>Optional: By checking this box, you agree to receive automated SMS alerts from Emanna Digital regarding work orders and leads submitted on our website. One message per submission. Msg &amp; data rates may apply. Reply STOP to opt out and HELP for help. View our <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</span>
                 </label>
+              </div>
+              <div class="lp-step" hidden>
+                <p class="lp-q" id="q-biz">What kind of business do you run?</p>
+                <fieldset class="lp-options" aria-labelledby="q-biz">
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Contractor / Construction" required><span>Contractor / Construction</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Home Services" required><span>Home Services</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Restaurant / Food" required><span>Restaurant / Food</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Health &amp; Wellness" required><span>Health &amp; Wellness</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Salon / Beauty" required><span>Salon / Beauty</span></label>
+                  <label class="lp-opt lp-opt-other"><input type="radio" name="business_type" value="Other" required><span>Other (type it)</span></label>
+                </fieldset>
+                <div class="lp-other" hidden>
+                  <input type="text" id="cf-biz-other" name="business_type_other" placeholder="e.g. Auto repair, photography, tutoring..." autocomplete="off">
+                </div>
+              </div>
+              <div class="lp-step" hidden>
+                <p class="lp-q" id="q-ready">Are you ready to start, or just shopping around?</p>
+                <fieldset class="lp-options lp-options-2" aria-labelledby="q-ready">
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="readiness" value="Ready to start" required><span><b>Ready to start</b><small>I want my website live in 3 days</small></span></label>
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="readiness" value="Just shopping around" required><span><b>Just shopping around</b><small>I'm comparing my options</small></span></label>
+                </fieldset>
               </div>
             </div>
 
@@ -154,7 +168,12 @@
             <div class="lp-done" hidden>
               <div class="lp-done-icon">&#10003;</div>
               <h3>You're in!</h3>
-              <p>Thanks &mdash; we'll reach out within one business day to kick off your 3-day launch.</p>
+              <p>We'll call you within one business day to kick off your 3-day launch.</p>
+              <div class="lp-save">
+                <p class="lp-save-title">Save our number so you know it's us</p>
+                <p class="lp-save-sub">We'll call from <b>(916) 619-3474</b>. Add us to your contacts and you'll see <b>Emanna Digital</b> on your screen when we ring.</p>
+                <a href="emanna-digital-david.vcf" download="Emanna-Digital.vcf" class="btn btn-pop btn-lg">Save to my contacts</a>
+              </div>
             </div>
           </form>
         </div>
@@ -569,7 +588,6 @@
         <div class="lp-final-step reveal-up"><span>3</span><h3>You're live</h3><p>In 3 days, and covered by the 30-day guarantee.</p></div>
       </div>
 
-      <p class="lp-final-built reveal-up">Websites we've built for businesses like yours</p>
       <div class="lp-final-clients reveal-up">
         <a href="https://rootridgelandscaping.com/" target="_blank" rel="noopener noreferrer">Root Ridge Landscaping</a>
         <a href="https://uscustompoolsandspas.com/" target="_blank" rel="noopener noreferrer">US Custom Pools &amp; Spas</a>

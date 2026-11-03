@@ -5,9 +5,24 @@
      Weekly offer countdown. Counts down to Sunday 11:59 PM Pacific time,
      then rolls straight into the next week.
   ----------------------------------------------------------------- */
-  function msUntilWeeklyDeadline(){
+  // Current wall-clock time in Pacific time, built from numeric parts (works in every browser, including Safari).
+  var ptFormatter;
+  try {
+    ptFormatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/Los_Angeles", hour12: false,
+      year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric"
+    });
+  } catch (e) { ptFormatter = null; }
+  function pacificNow(){
     var now = new Date();
-    var pt = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+    if (!ptFormatter || !ptFormatter.formatToParts) return now;
+    var p = {};
+    ptFormatter.formatToParts(now).forEach(function(x){ p[x.type] = parseInt(x.value, 10); });
+    if (isNaN(p.year)) return now;
+    return new Date(p.year, p.month - 1, p.day, p.hour % 24, p.minute, p.second);
+  }
+  function msUntilWeeklyDeadline(){
+    var pt = pacificNow();
     var end = new Date(pt.getTime());
     end.setDate(pt.getDate() + ((7 - pt.getDay()) % 7));
     end.setHours(23, 59, 59, 999);

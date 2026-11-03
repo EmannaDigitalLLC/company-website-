@@ -679,3 +679,9 @@ section.lp-stats{ padding:var(--space-4) 0; }
 .lp-opt-big > span::before{ grid-row:1 / span 2; align-self:center; }
 .lp-opt-big > span b{ grid-column:2; font-size:19px; font-weight:600; font-family:var(--font-display); }
 .lp-opt-big > span small{ grid-column:2; margin:0; font-size:13.5px; }
+
+/* ===================================================================
+   Anchor jumps: leave room for the fixed top bar + header
+=================================================================== */
+.lp-page section[id]{ scroll-margin-top:calc(var(--lp-bar-h, 0px) + 22px); }
+.lp-page .lp-form-frame{ scroll-margin-top:calc(var(--lp-bar-h, 0px) + 104px); }

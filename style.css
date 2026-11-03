@@ -823,3 +823,9 @@ section{ position:relative; padding:var(--space-6) 0; }
   .industry-groups{ grid-template-columns:1fr; }
   .price-card .price{ align-items:center; }
 }
+
+/* odd number of portfolio cards: center the lone last card on the 3-column desktop grid */
+@media (min-width:961px){
+  .portfolio-grid .portfolio-card:last-child:nth-child(3n+1){ grid-column:2; }
+}
+

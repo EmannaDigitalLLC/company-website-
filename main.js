@@ -280,6 +280,27 @@
   });
 
   /* -----------------------------------------------------------------
+     Ad attribution: remember which ad/campaign brought the visitor here
+     (first touch wins), so every lead carries its source.
+  ----------------------------------------------------------------- */
+  var ATTR_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"];
+  function captureAttribution(){
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem("emannaAttr") || "{}") || {}; } catch (e) { saved = {}; }
+    var params = new URLSearchParams(window.location.search);
+    var found = false, fresh = {};
+    ATTR_KEYS.forEach(function(k){ var v = params.get(k); if (v){ fresh[k] = v; found = true; } });
+    if (found && !saved.utm_source && !saved.fbclid){
+      saved = fresh;
+      saved.landing_page = window.location.pathname;
+      saved.first_seen = new Date().toISOString();
+      try { localStorage.setItem("emannaAttr", JSON.stringify(saved)); } catch (e) {}
+    }
+    return saved;
+  }
+  var attribution = captureAttribution();
+
+  /* -----------------------------------------------------------------
      Contact form (Web3Forms)
   ----------------------------------------------------------------- */
   var contactForm = document.getElementById("contactForm");
@@ -298,6 +319,23 @@
       var formData = new FormData(contactForm);
       var payload = Object.fromEntries(formData);
 
+      // Add where the lead came from (ad/campaign, page, time).
+      ATTR_KEYS.forEach(function(k){ if (attribution[k]) payload[k] = attribution[k]; });
+      payload.page_url = window.location.origin + window.location.pathname;
+      payload.referrer = document.referrer || "";
+      payload.submitted_at = new Date().toISOString();
+      if (!payload.source) payload.source = "website-contact-form";
+
+      // Send a copy to the automation (Make) if a webhook URL has been set.
+      // Form-encoded + no-cors so the browser never blocks it; failures are ignored
+      // because the email below still delivers the lead.
+      var hook = window.EMANNA_LEAD_WEBHOOK;
+      if (typeof hook === "string" && /^https:\/\/hook\.[a-z0-9.-]*make\.com\//i.test(hook)){
+        var hookData = new URLSearchParams();
+        Object.keys(payload).forEach(function(k){ if (k !== "access_key" && k !== "botcheck") hookData.append(k, payload[k]); });
+        try { fetch(hook, { method: "POST", mode: "no-cors", keepalive: true, body: hookData }).catch(function(){}); } catch (err) {}
+      }
+
       contactSubmit.setAttribute("disabled", "true");
       contactSubmitLabel.textContent = "Sending...";
       contactStatus.textContent = "";
@@ -314,6 +352,7 @@
             contactStatus.classList.add("is-success");
             contactStatus.textContent = "Thanks — your message is in! I'll get back to you within one business day.";
             contactForm.reset();
+            try { if (typeof window.fbq === "function") window.fbq("track", "Lead"); } catch (err) {}
             contactForm.dispatchEvent(new Event("contact:success"));
           } else {
             contactStatus.classList.add("is-error");

@@ -22,19 +22,10 @@
 
 <div class="progress-bar" aria-hidden="true"><span id="progressFill"></span></div>
 
-<!-- TOP SALE BAR (countdown resets every Sunday night, Pacific time) -->
+<!-- TOP SALE BAR: plain text + small button (the countdown lives in the bottom bar) -->
 <div class="lp-sale-bar" id="saleBar" role="region" aria-label="Limited-time offer">
-  <div class="lp-sale-copy">
-    <b>Limited-time offer: your multi-page website for $99</b>
-    <span>Regular price $499 &middot; 30-day money-back guarantee</span>
-  </div>
-  <div class="lp-countdown lp-cd-sm" data-lp-countdown aria-hidden="true">
-    <div class="lp-cd-box"><b data-cd="d">00</b><small>Days</small></div><i>:</i>
-    <div class="lp-cd-box"><b data-cd="h">00</b><small>Hrs</small></div><i>:</i>
-    <div class="lp-cd-box"><b data-cd="m">00</b><small>Min</small></div><i>:</i>
-    <div class="lp-cd-box"><b data-cd="s">00</b><small>Sec</small></div>
-  </div>
-  <a href="#claim" class="btn btn-pop lp-sale-cta"><span class="lp-long">Claim $99 deal</span><span class="lp-short">Claim $99</span> <span aria-hidden="true">&rarr;</span></a>
+  <p class="lp-sale-copy"><b>Limited-time offer: your multi-page website for $99.</b> <span>Regular price $499 &middot; 30-day money-back guarantee</span></p>
+  <a href="#claim" class="btn btn-pop lp-sale-cta">Claim deal <span aria-hidden="true">&rarr;</span></a>
   <button type="button" class="lp-sale-close" id="saleBarClose" aria-label="Dismiss offer banner">&times;</button>
 </div>
 
@@ -117,38 +108,50 @@
 
             <div class="lp-steps">
               <div class="lp-step">
-                <label class="lp-q" for="cf-name">First, what's your name?</label>
-                <input type="text" id="cf-name" name="name" required placeholder="Jane Smith" autocomplete="name">
-              </div>
-              <div class="lp-step" hidden>
-                <label class="lp-q" for="cf-email">What's the best email to reach you?</label>
-                <input type="email" id="cf-email" name="email" required placeholder="jane@yourbusiness.com" autocomplete="email">
-              </div>
-              <div class="lp-step" hidden>
-                <label class="lp-q" for="cf-phone">And your phone number?</label>
-                <input type="tel" id="cf-phone" name="phone" required placeholder="(916) 555-0123" autocomplete="tel">
-                <p class="lp-hint">So we can call you about your website.</p>
-              </div>
-              <div class="lp-step" hidden>
-                <p class="lp-q" id="q-biz">What kind of business do you run?</p>
+                <p class="lp-q" id="q-biz">What type of business do you have?</p>
                 <fieldset class="lp-options" aria-labelledby="q-biz">
-                  <label class="lp-opt"><input type="radio" name="business_type" value="Contractor / Construction" required><span>Contractor / Construction</span></label>
-                  <label class="lp-opt"><input type="radio" name="business_type" value="Home Services" required><span>Home Services</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Contractor / Home Services" required><span>Contractor / Home Services</span></label>
                   <label class="lp-opt"><input type="radio" name="business_type" value="Restaurant / Food" required><span>Restaurant / Food</span></label>
-                  <label class="lp-opt"><input type="radio" name="business_type" value="Health &amp; Wellness" required><span>Health &amp; Wellness</span></label>
-                  <label class="lp-opt"><input type="radio" name="business_type" value="Salon / Beauty" required><span>Salon / Beauty</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Salon / Barber / Beauty" required><span>Salon / Barber / Beauty</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="Auto Services" required><span>Auto Services</span></label>
+                  <label class="lp-opt"><input type="radio" name="business_type" value="E-commerce / Online Store" required><span>E-commerce / Online Store</span></label>
                   <label class="lp-opt lp-opt-other"><input type="radio" name="business_type" value="Other" required><span>Other (type it)</span></label>
                 </fieldset>
                 <div class="lp-other" hidden>
-                  <input type="text" id="cf-biz-other" name="business_type_other" placeholder="e.g. Auto repair, photography, tutoring..." autocomplete="off">
+                  <input type="text" id="cf-biz-other" name="business_type_other" placeholder="e.g. Photography, tutoring, cleaning..." autocomplete="off">
                 </div>
               </div>
               <div class="lp-step" hidden>
-                <p class="lp-q" id="q-ready">Are you ready to start, or just shopping around?</p>
-                <fieldset class="lp-options lp-options-2" aria-labelledby="q-ready">
-                  <label class="lp-opt lp-opt-big"><input type="radio" name="readiness" value="Ready to start" required><span><b>Ready to start</b><small>I want my website live in 3 days</small></span></label>
-                  <label class="lp-opt lp-opt-big"><input type="radio" name="readiness" value="Just shopping around" required><span><b>Just shopping around</b><small>I'm comparing my options</small></span></label>
+                <p class="lp-q" id="q-looking">What are you looking for?</p>
+                <fieldset class="lp-options lp-options-2" aria-labelledby="q-looking">
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="looking_for" value="New Website" required><span><b>New Website</b><small>I need a site built from scratch</small></span></label>
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="looking_for" value="Redesign my current website" required><span><b>Redesign my current website</b><small>I have a site that needs a refresh</small></span></label>
                 </fieldset>
+              </div>
+              <div class="lp-step" hidden>
+                <p class="lp-q" id="q-reach">What's the best way to reach you?</p>
+                <fieldset class="lp-options lp-options-2" aria-labelledby="q-reach">
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="contact_preference" value="Call" required><span><b>Call</b></span></label>
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="contact_preference" value="Text" required><span><b>Text</b></span></label>
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="contact_preference" value="Email" required><span><b>Email</b></span></label>
+                </fieldset>
+              </div>
+              <div class="lp-step" hidden>
+                <p class="lp-q" id="q-ready">Are you ready to get started?</p>
+                <fieldset class="lp-options lp-options-2" aria-labelledby="q-ready">
+                  <label class="lp-opt lp-opt-big"><input type="radio" name="readiness" value="Yes" required><span><b>Yes</b><small>I want my website live in 3 days</small></span></label>
+                </fieldset>
+              </div>
+              <div class="lp-step" hidden>
+                <p class="lp-q" id="q-contact">Great. Where should we reach you?</p>
+                <div class="lp-fields" role="group" aria-labelledby="q-contact">
+                  <label class="lp-field"><span>Your name</span>
+                    <input type="text" id="cf-name" name="name" required placeholder="Jane Smith" autocomplete="name"></label>
+                  <label class="lp-field"><span>Phone number</span>
+                    <input type="tel" id="cf-phone" name="phone" required placeholder="(916) 555-0123" autocomplete="tel"></label>
+                  <label class="lp-field"><span>Email</span>
+                    <input type="email" id="cf-email" name="email" required placeholder="jane@yourbusiness.com" autocomplete="email"></label>
+                </div>
               </div>
             </div>
 
@@ -164,7 +167,7 @@
             <div class="lp-done" hidden>
               <div class="lp-done-icon">&#10003;</div>
               <h3>You're in!</h3>
-              <p>We'll call you within one business day to kick off your 3-day launch.</p>
+              <p>We'll reach out within one business day to kick off your 3-day launch.</p>
               <div class="lp-save">
                 <p class="lp-save-title">Save our number so you know it's us</p>
                 <p class="lp-save-sub">We'll call from <b>(916) 619-3474</b>. Add us to your contacts and you'll see <b>Emanna Digital</b> on your screen when we ring.</p>

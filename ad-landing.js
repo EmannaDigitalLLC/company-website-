@@ -78,6 +78,25 @@
   });
 
   /* -----------------------------------------------------------------
+     Bottom sale bar: only after scrolling to the third section
+  ----------------------------------------------------------------- */
+  var thirdSection = document.getElementById("work");
+  var bottomBar = document.querySelector(".lp-sale-big");
+  if (thirdSection && bottomBar){
+    var barTicking = false;
+    var syncBottomBar = function(){
+      barTicking = false;
+      var reached = thirdSection.getBoundingClientRect().top <= window.innerHeight * 0.75;
+      document.body.classList.toggle("lp-bottom-on", reached);
+    };
+    window.addEventListener("scroll", function(){
+      if (!barTicking){ barTicking = true; requestAnimationFrame(syncBottomBar); }
+    }, { passive: true });
+    window.addEventListener("resize", syncBottomBar);
+    syncBottomBar();
+  }
+
+  /* -----------------------------------------------------------------
      One-question-at-a-time form
   ----------------------------------------------------------------- */
   var form = document.getElementById("contactForm");
@@ -118,16 +137,20 @@
     return true;
   }
 
-  // Business type: tapping a popular choice moves on; "Other" reveals a text box.
+  // Multiple-choice questions: tapping a choice moves on; "Other" reveals a text box.
   var otherWrap = form.querySelector(".lp-other");
   var otherInput = document.getElementById("cf-biz-other");
-  form.querySelectorAll('input[name="business_type"]').forEach(function(radio){
+  form.querySelectorAll('.lp-options input[type="radio"]').forEach(function(radio){
     radio.addEventListener("change", function(){
-      var isOther = radio.value === "Other";
-      otherWrap.hidden = !isOther;
-      otherInput.required = isOther;
-      if (isOther){ otherInput.focus({ preventScroll: true }); }
-      else { otherInput.value = ""; setTimeout(function(){ nextBtn.click(); }, 220); }
+      var isBiz = radio.name === "business_type";
+      var isOther = isBiz && radio.value === "Other";
+      if (isBiz){
+        otherWrap.hidden = !isOther;
+        otherInput.required = isOther;
+      }
+      if (isOther){ otherInput.focus({ preventScroll: true }); return; }
+      if (isBiz) otherInput.value = "";
+      if (current < steps.length - 1) setTimeout(function(){ nextBtn.click(); }, 220);
     });
   });
 
@@ -146,6 +169,14 @@
     if (current < steps.length - 1){
       e.preventDefault();
       nextBtn.click();
+      return;
+    }
+    // Last step has several fields: Enter moves to the next one, then submits.
+    var inputs = Array.prototype.slice.call(steps[current].querySelectorAll("input"));
+    var at = inputs.indexOf(t);
+    if (at > -1 && at < inputs.length - 1){
+      e.preventDefault();
+      inputs[at + 1].focus();
     }
   });
 

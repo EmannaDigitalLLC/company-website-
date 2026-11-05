@@ -707,10 +707,19 @@ section.lp-stats{ padding:var(--space-4) 0; }
 .lp-sale-copy b{ font-size:13.5px; font-weight:600; }
 .lp-sale-copy span{ display:inline; font-size:13px; color:rgba(253,241,230,0.72); margin-left:6px; }
 .lp-sale-cta{ padding:6px 14px; font-size:11px; letter-spacing:0.06em; }
-@media (max-width:820px){ .lp-page{ --lp-bar-h:0px; } }
 
 /* Combined last step: name, phone and email on one screen */
 .lp-fields{ display:grid; gap:12px; }
 .lp-field{ display:block; }
 .lp-field > span{ display:block; margin-bottom:6px; font-size:13px; font-weight:600; color:var(--ink-soft); }
 .lp-stepper .lp-field input{ width:100%; }
+
+/* Top bar also shows on phones (slim, two short lines at most) */
+@media (max-width:820px){
+  .lp-page{ --lp-bar-h:46px; }
+  .lp-sale-bar{ display:flex; justify-content:space-between; gap:10px; padding:0 44px 0 12px; }
+  .lp-sale-copy{ display:block; flex:1 1 auto; min-width:0; font-size:12px; line-height:1.25; }
+  .lp-sale-copy b{ font-size:12px; }
+  .lp-sale-copy span{ display:none; }
+  .lp-sale-cta{ padding:7px 11px; font-size:10.5px; flex:none; }
+}

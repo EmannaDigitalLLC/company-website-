@@ -78,20 +78,16 @@
   });
 
   /* -----------------------------------------------------------------
-     Bottom sale bar: only after scrolling to the third section
+     Bottom sale bar: only after scrolling to the fourth section
   ----------------------------------------------------------------- */
-  var thirdSection = document.getElementById("work");
+  var barTrigger = document.getElementById("familiar");
   var bottomBar = document.querySelector(".lp-sale-big");
-  if (thirdSection && bottomBar){
-    var barTicking = false;
+  if (barTrigger && bottomBar){
     var syncBottomBar = function(){
-      barTicking = false;
-      var reached = thirdSection.getBoundingClientRect().top <= window.innerHeight * 0.75;
+      var reached = barTrigger.getBoundingClientRect().top <= window.innerHeight * 0.75;
       document.body.classList.toggle("lp-bottom-on", reached);
     };
-    window.addEventListener("scroll", function(){
-      if (!barTicking){ barTicking = true; requestAnimationFrame(syncBottomBar); }
-    }, { passive: true });
+    window.addEventListener("scroll", syncBottomBar, { passive: true });
     window.addEventListener("resize", syncBottomBar);
     syncBottomBar();
   }

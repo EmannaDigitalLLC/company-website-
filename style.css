@@ -827,5 +827,20 @@ section{ position:relative; padding:var(--space-6) 0; }
 /* odd number of portfolio cards: center the lone last card on the 3-column desktop grid */
 @media (min-width:961px){
   .portfolio-grid .portfolio-card:last-child:nth-child(3n+1){ grid-column:2; }
+  /* two cards in the last row: center the pair */
+  .portfolio-grid .portfolio-card:nth-last-child(2):nth-child(3n+1),
+  .portfolio-grid .portfolio-card:last-child:nth-child(3n+2){ position:relative; left:calc(50% + var(--space-3) / 2); }
 }
 
+
+/* Google reviews */
+.testimonial-grid-google{ max-width:1040px; align-items:start; }
+.testimonial-grid-google .testimonial-card{ display:flex; flex-direction:column; gap:12px; }
+.testimonial-grid-google .testimonial-quote{ font-size:16px; }
+.testimonial-grid-google .testimonial-quote + .testimonial-quote{ margin-top:2px; }
+.testimonial-grid-google .testimonial-name{ margin-top:auto; padding-top:4px; }
+.google-rating{ display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; color:var(--ink); text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:2px; }
+.google-rating span{ color:var(--amber); letter-spacing:2px; }
+.google-rating:hover{ opacity:.8; }
+@media (max-width:960px){ .testimonial-grid-google{ grid-template-columns:1fr; } }
+.testimonial-grid-google .testimonial-card{ text-align:left; }

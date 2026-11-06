@@ -834,14 +834,27 @@ section{ position:relative; padding:var(--space-6) 0; }
 
 
 /* Google reviews */
-.testimonial-grid-google{ max-width:1040px; align-items:start; }
-.testimonial-grid-google .testimonial-card{ display:flex; flex-direction:column; gap:12px; }
-.testimonial-grid-google .testimonial-quote{ font-size:16px; }
-.testimonial-grid-google .testimonial-quote + .testimonial-quote{ margin-top:2px; }
-.testimonial-grid-google .testimonial-name{ margin-top:auto; padding-top:4px; }
+.review-track .testimonial-card{ display:flex; flex-direction:column; gap:12px; }
+.review-track .testimonial-quote{ font-size:16px; }
+.review-track .testimonial-quote + .testimonial-quote{ margin-top:2px; }
+.review-track .testimonial-name{ margin-top:auto; padding-top:4px; }
 .google-rating{ display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; color:var(--ink); text-decoration:none; border-bottom:1px solid currentColor; padding-bottom:2px; }
 .google-rating span{ color:var(--amber); letter-spacing:2px; }
 .google-rating:hover{ opacity:.8; }
-@media (max-width:960px){ .testimonial-grid-google{ grid-template-columns:1fr; } }
-.testimonial-grid-google .testimonial-card{ text-align:left; align-items:stretch; }
-@media (min-width:961px){ .testimonial-grid-google .testimonial-card:last-child:nth-child(odd){ grid-column:1 / -1; justify-self:center; width:calc(50% - var(--space-3) / 2); } }
+.review-track .testimonial-card{ text-align:left; align-items:stretch; }
+
+/* Reviews marquee (shared by the main site and the ad page) */
+.review-marquee{ overflow:hidden; margin-top:var(--space-4); -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent); }
+.review-marquee:not(.is-ready){ overflow-x:auto; }
+.review-track{ display:flex; width:max-content; padding:6px 0; }
+.review-track > *{ flex:none; width:360px; margin-right:24px; }
+.review-marquee.is-ready .review-track{ animation:reviewMarquee var(--review-speed,70s) linear infinite; }
+.review-marquee.is-ready:hover .review-track,
+.review-marquee.is-ready:focus-within .review-track{ animation-play-state:paused; }
+@keyframes reviewMarquee{ to{ transform:translateX(-50%); } }
+@media (max-width:620px){ .review-track > *{ width:290px; margin-right:16px; } }
+@media (prefers-reduced-motion:reduce){
+  .review-marquee.is-ready .review-track{ animation:none; }
+  .review-marquee{ overflow-x:auto; }
+  .review-track > [aria-hidden="true"]{ display:none; }
+}

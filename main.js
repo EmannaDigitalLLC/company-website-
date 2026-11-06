@@ -370,4 +370,17 @@
     });
   }
 
+  /* Reviews marquee: repeat the cards once so the loop is seamless. */
+  document.querySelectorAll("[data-review-marquee]").forEach(function(box){
+    var track = box.querySelector(".review-track");
+    if (!track || box.classList.contains("is-ready")) return;
+    Array.prototype.slice.call(track.children).forEach(function(card){
+      var copy = card.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      copy.querySelectorAll("a").forEach(function(a){ a.setAttribute("tabindex", "-1"); });
+      track.appendChild(copy);
+    });
+    box.classList.add("is-ready");
+  });
+
 })();

@@ -383,4 +383,25 @@
     box.classList.add("is-ready");
   });
 
+  /* Client video testimonial: tap to play with sound, pause when scrolled away. */
+  document.querySelectorAll("[data-vt]").forEach(function(box){
+    var video = box.querySelector("video");
+    var play = box.querySelector(".vt-play");
+    if (!video || !play) return;
+    play.addEventListener("click", function(){
+      video.controls = true;
+      box.classList.add("is-playing");
+      var p = video.play();
+      if (p && p.catch) p.catch(function(){ box.classList.remove("is-playing"); video.controls = false; });
+    });
+    video.addEventListener("ended", function(){
+      video.currentTime = 0; video.controls = false; box.classList.remove("is-playing");
+    });
+    if ("IntersectionObserver" in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if (!e.isIntersecting && !video.paused) video.pause(); });
+      }, { threshold: 0.25 }).observe(box);
+    }
+  });
+
 })();
